@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Math Problems</title>
+</head>
+<body>
+    <h1>Random Math Problem Generator</h1>
+    <div id="problem">Press "New Problem" to start.</div>
+    <input type="number" id="answer" placeholder="Enter your answer here">
+    <button id="submitAnswer">Submit Answer</button>
+    <div id="feedback"></div><br>
+    <button id="newProblem">New Problem</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<script>let correctAnswer; // Holds the correct answer to the current problem
+
+    function generateMathProblem() {
+        let num1 = Math.floor(Math.random() * 100) + 1;
+        let num2 = Math.floor(Math.random() * 100) + 1;
+        const operation = Math.random() > 0.5 ? '+' : '-';
+    
+        // Ensure num1 is greater than num2 for subtraction to avoid negative results
+        if (operation === '-') {
+            if (num1 < num2) {
+                // Swap num1 and num2
+                let temp = num1;
+                num1 = num2;
+                num2 = temp;
+            }
+            correctAnswer = num1 - num2;
+            document.getElementById('problem').textContent = `What is ${num1} - ${num2}?`;
+        } else { // operation is '+'
+            correctAnswer = num1 + num2;
+            document.getElementById('problem').textContent = `What is ${num1} + ${num2}?`;
+        }
+    
+        document.getElementById('feedback').textContent = ''; // Clear feedback
+        document.getElementById('answer').value = ''; // Clear previous answer
+    }
+    
+    document.getElementById('submitAnswer').addEventListener('click', function() {
+        const userAnswer = parseInt(document.getElementById('answer').value, 10);
+        if (userAnswer === correctAnswer) {
+            document.getElementById('feedback').textContent = 'Correct! Get a new problem.';
+        } else {
+            document.getElementById('feedback').textContent = 'Incorrect. Try again.';
+        }
+    });
+    
+    document.getElementById('newProblem').addEventListener('click', generateMathProblem);
+    
+    
+    </script>
